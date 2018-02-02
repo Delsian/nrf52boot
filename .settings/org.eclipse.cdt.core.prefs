@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582/SDK/delimiter=;
+environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582/SDK/operation=append
+environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582/SDK/value=${ProjDirPath}\\..\\SDK
+environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582/append=true
+environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582/appendContributed=true
