@@ -96,6 +96,7 @@
 									<listOptionValue builtIn="false" value="S132"/>
 									<listOptionValue builtIn="false" value="BOARD_CUSTOM"/>
 									<listOptionValue builtIn="false" value="MAIN_APPLICATION_START_ADDR=0x23000"/>
+									<listOptionValue builtIn="false" value="NRF_DFU_DEBUG_VERSION"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths.83678215" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths" useByScannerDiscovery="true" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\ble\common&quot;"/>
@@ -122,6 +123,14 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\experimental_memobj&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\balloc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\atomic&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\mem_manager&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\drivers_nrf\rng&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\drivers_nrf\common&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\crypto\backend\micro_ecc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\crypto\&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\crypto\backend\nrf_crypto_sw&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\external\nano-pb&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\crc32&quot;"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input.971571318" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input"/>
 							</tool>
@@ -133,6 +142,7 @@
 									<listOptionValue builtIn="false" value="S132"/>
 									<listOptionValue builtIn="false" value="BOARD_CUSTOM"/>
 									<listOptionValue builtIn="false" value="MAIN_APPLICATION_START_ADDR=0x23000"/>
+									<listOptionValue builtIn="false" value="NRF_DFU_DEBUG_VERSION"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths.414215510" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths" useByScannerDiscovery="true" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\ble\common&quot;"/>
@@ -159,6 +169,14 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\experimental_memobj&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\balloc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\atomic&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\mem_manager&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\drivers_nrf\rng&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\drivers_nrf\common&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\crypto\backend\micro_ecc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\crypto\&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\crypto\backend\nrf_crypto_sw&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\external\nano-pb&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\crc32&quot;"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.1368469132" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input"/>
 							</tool>

@@ -35,9 +35,19 @@
 			<locationURI>$%7BSDK%7D/components/libraries/util/app_util_platform.c</locationURI>
 		</link>
 		<link>
+			<name>SDK/crc32.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/crc32/crc32.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/gcc_startup_nrf52.S</name>
 			<type>1</type>
 			<locationURI>$%7BSDK%7D/components/toolchain/gcc/gcc_startup_nrf52.S</locationURI>
+		</link>
+		<link>
+			<name>SDK/nano-pb</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK/nrf_balloc.c</name>
@@ -65,6 +75,26 @@
 			<locationURI>$%7BSDK%7D/components/libraries/bootloader/nrf_bootloader_info.c</locationURI>
 		</link>
 		<link>
+			<name>SDK/nrf_crypto_init.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/crypto/nrf_crypto_init.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_crypto_keys.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/crypto/nrf_crypto_keys.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_crypto_mem.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/crypto/nrf_crypto_mem.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_crypto_rng.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/crypto/nrf_crypto_rng.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/nrf_dfu_mbr.c</name>
 			<type>1</type>
 			<locationURI>$%7BSDK%7D/components/libraries/bootloader/dfu/nrf_dfu_mbr.c</locationURI>
@@ -80,9 +110,29 @@
 			<locationURI>$%7BSDK%7D/components/libraries/experimental_memobj/nrf_memobj.c</locationURI>
 		</link>
 		<link>
+			<name>SDK/nrf_svc_handler.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/svc/nrf_svc_handler.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/system_nrf52.c</name>
 			<type>1</type>
 			<locationURI>$%7BSDK%7D/components/toolchain/system_nrf52.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nano-pb/pb_common.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/external/nano-pb/pb_common.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nano-pb/pb_decode.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/external/nano-pb/pb_decode.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nano-pb/pb_encode.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/external/nano-pb/pb_encode.c</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
