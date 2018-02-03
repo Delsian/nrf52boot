@@ -61,6 +61,8 @@ extern "C" {
 
 
 //=====
+#define BSP_LED_0 10
+#define BSP_LED_1 11
 
 #define RX_PIN_NUMBER  11
 #define TX_PIN_NUMBER  9

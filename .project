@@ -30,9 +30,24 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/app_scheduler.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/scheduler/app_scheduler.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/app_timer.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/timer/app_timer.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/app_util_platform.c</name>
 			<type>1</type>
 			<locationURI>$%7BSDK%7D/components/libraries/util/app_util_platform.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/ble_srv_common.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/ble/common/ble_srv_common.c</locationURI>
 		</link>
 		<link>
 			<name>SDK/crc32.c</name>
@@ -45,14 +60,34 @@
 			<locationURI>$%7BSDK%7D/components/toolchain/gcc/gcc_startup_nrf52.S</locationURI>
 		</link>
 		<link>
+			<name>SDK/mem_manager.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/mem_manager/mem_manager.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/micro_ecc_lib_ecdsa.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/crypto/backend/micro_ecc/micro_ecc_lib_ecdsa.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/nano-pb</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/nrf_atfifo.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/atomic_fifo/nrf_atfifo.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/nrf_balloc.c</name>
 			<type>1</type>
 			<locationURI>$%7BSDK%7D/components/libraries/balloc/nrf_balloc.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_ble_dfu.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/bootloader/ble_dfu/nrf_ble_dfu.c</locationURI>
 		</link>
 		<link>
 			<name>SDK/nrf_bootloader.c</name>
@@ -75,6 +110,16 @@
 			<locationURI>$%7BSDK%7D/components/libraries/bootloader/nrf_bootloader_info.c</locationURI>
 		</link>
 		<link>
+			<name>SDK/nrf_crypto_ecdsa.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/crypto/nrf_crypto_ecdsa.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_crypto_hash.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/crypto/nrf_crypto_hash.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/nrf_crypto_init.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/crypto/nrf_crypto_init.c</locationURI>
@@ -95,9 +140,74 @@
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/crypto/nrf_crypto_rng.c</locationURI>
 		</link>
 		<link>
+			<name>SDK/nrf_crypto_sw_hash.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/crypto/backend/nrf_crypto_sw/nrf_crypto_sw_hash.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_dfu.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/bootloader/dfu/nrf_dfu.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_dfu_flash.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/bootloader/dfu/nrf_dfu_flash.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_dfu_handling_error.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/bootloader/dfu/nrf_dfu_handling_error.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/nrf_dfu_mbr.c</name>
 			<type>1</type>
 			<locationURI>$%7BSDK%7D/components/libraries/bootloader/dfu/nrf_dfu_mbr.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_dfu_settings.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/bootloader/dfu/nrf_dfu_settings.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_dfu_settings_svci.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/bootloader/dfu/nrf_dfu_settings_svci.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_dfu_transport.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/bootloader/dfu/nrf_dfu_transport.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_dfu_utils.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/bootloader/dfu/nrf_dfu_utils.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_drv_clock.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/drivers_nrf/clock/nrf_drv_clock.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_drv_common.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/drivers_nrf/common/nrf_drv_common.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_fstorage.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/fstorage/nrf_fstorage.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_fstorage_nvmc.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/fstorage/nrf_fstorage_nvmc.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_fstorage_sd.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/fstorage/nrf_fstorage_sd.c</locationURI>
 		</link>
 		<link>
 			<name>SDK/nrf_log_frontend.c</name>
@@ -110,14 +220,44 @@
 			<locationURI>$%7BSDK%7D/components/libraries/experimental_memobj/nrf_memobj.c</locationURI>
 		</link>
 		<link>
+			<name>SDK/nrf_nvmc.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/drivers_nrf/hal/nrf_nvmc.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_sdh.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/softdevice/common/nrf_sdh.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_sdh_ble.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/softdevice/common/nrf_sdh_ble.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_section_iter.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/experimental_section_vars/nrf_section_iter.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/nrf_svc_handler.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/svc/nrf_svc_handler.c</locationURI>
 		</link>
 		<link>
+			<name>SDK/sha256.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/sha256/sha256.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/system_nrf52.c</name>
 			<type>1</type>
 			<locationURI>$%7BSDK%7D/components/toolchain/system_nrf52.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/uECC.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/micro-ecc/uECC.c</locationURI>
 		</link>
 		<link>
 			<name>SDK/nano-pb/pb_common.c</name>
