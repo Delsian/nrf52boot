@@ -175,6 +175,16 @@
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/bootloader/dfu/nrf_dfu_settings_svci.c</locationURI>
 		</link>
 		<link>
+			<name>SDK/nrf_dfu_svci.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/bootloader/dfu/nrf_dfu_svci.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_dfu_svci_handler.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/bootloader/dfu/nrf_dfu_svci_handler.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/nrf_dfu_transport.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/bootloader/dfu/nrf_dfu_transport.c</locationURI>
