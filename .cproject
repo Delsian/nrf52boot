@@ -140,6 +140,7 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\scheduler&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\atomic_fifo&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\sha256&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\external\fprintf&quot;"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input.971571318" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input"/>
 							</tool>
@@ -195,6 +196,7 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\scheduler&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\atomic_fifo&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\sha256&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\external\fprintf&quot;"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.1368469132" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input"/>
 							</tool>
@@ -348,6 +350,8 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\atomic_fifo&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\sha256&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\micro-ecc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\external\fprintf&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\external\segger_rtt&quot;"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input.1617493183" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input"/>
 							</tool>
@@ -390,6 +394,8 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\atomic_fifo&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\sha256&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\micro-ecc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\external\fprintf&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\external\segger_rtt&quot;"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.760597029" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input"/>
 							</tool>

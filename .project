@@ -30,6 +30,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Log</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/app_scheduler.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/scheduler/app_scheduler.c</locationURI>
@@ -205,6 +210,16 @@
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/drivers_nrf/common/nrf_drv_common.c</locationURI>
 		</link>
 		<link>
+			<name>SDK/nrf_fprintf.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/external/fprintf/nrf_fprintf.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_fprintf_format.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/external/fprintf/nrf_fprintf_format.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/nrf_fstorage.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/fstorage/nrf_fstorage.c</locationURI>
@@ -218,11 +233,6 @@
 			<name>SDK/nrf_fstorage_sd.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/fstorage/nrf_fstorage_sd.c</locationURI>
-		</link>
-		<link>
-			<name>SDK/nrf_log_frontend.c</name>
-			<type>1</type>
-			<locationURI>$%7BSDK%7D/components/libraries/experimental_log/src/nrf_log_frontend.c</locationURI>
 		</link>
 		<link>
 			<name>SDK/nrf_memobj.c</name>
@@ -250,6 +260,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/experimental_section_vars/nrf_section_iter.c</locationURI>
 		</link>
 		<link>
+			<name>SDK/nrf_strerror.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/strerror/nrf_strerror.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/nrf_svc_handler.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/svc/nrf_svc_handler.c</locationURI>
@@ -268,6 +283,46 @@
 			<name>SDK/uECC.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/micro-ecc/uECC.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/Log/SEGGER_RTT.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/external/segger_rtt/SEGGER_RTT.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/Log/SEGGER_RTT_Syscalls_GCC.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/external/segger_rtt/SEGGER_RTT_Syscalls_GCC.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/Log/SEGGER_RTT_printf.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/external/segger_rtt/SEGGER_RTT_printf.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/Log/nrf_log_backend_rtt.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/experimental_log/src/nrf_log_backend_rtt.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/Log/nrf_log_backend_serial.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/experimental_log/src/nrf_log_backend_serial.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/Log/nrf_log_default_backends.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/experimental_log/src/nrf_log_default_backends.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/Log/nrf_log_frontend.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/experimental_log/src/nrf_log_frontend.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/Log/nrf_log_str_formatter.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/experimental_log/src/nrf_log_str_formatter.c</locationURI>
 		</link>
 		<link>
 			<name>SDK/nano-pb/pb_common.c</name>

@@ -23,6 +23,11 @@ int main(void)
 {
     uint32_t ret_val;
 
+    (void) NRF_LOG_INIT(NULL);
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    NRF_LOG_INFO("Inside main");
+
     ret_val = nrf_bootloader_init();
     APP_ERROR_CHECK(ret_val);
 
