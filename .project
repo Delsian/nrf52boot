@@ -30,6 +30,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>config</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/config</locationURI>
+		</link>
+		<link>
 			<name>SDK/Log</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -317,7 +322,7 @@
 		<link>
 			<name>SDK/Log/nrf_log_frontend.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/experimental_log/src/nrf_log_frontend.c</locationURI>
+			<locationURI>$%7BSDK%7D/components/libraries/experimental_log/src/nrf_log_frontend.c</locationURI>
 		</link>
 		<link>
 			<name>SDK/Log/nrf_log_str_formatter.c</name>
