@@ -380,7 +380,7 @@ static nrf_dfu_res_code_t dfu_handle_prevalidate(dfu_signed_command_t const * p_
                 err_code = nrf_crypto_ecdsa_verify_hash(sig_info_p256, &crypto_key_pk, &init_packet_hash, &crypto_sig);
                 if (err_code != NRF_SUCCESS)
                 {
-                    NRF_LOG_ERROR("Signature failed");
+                    NRF_LOG_ERROR("Signature failed %d", err_code);
                     return NRF_DFU_RES_CODE_INVALID_OBJECT;
                 }
 

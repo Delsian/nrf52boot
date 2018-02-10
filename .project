@@ -260,6 +260,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/softdevice/common/nrf_sdh_ble.c</locationURI>
 		</link>
 		<link>
+			<name>SDK/nrf_sdh_soc.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/softdevice/common/nrf_sdh_soc.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/nrf_section_iter.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/libraries/experimental_section_vars/nrf_section_iter.c</locationURI>
