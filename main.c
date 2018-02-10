@@ -47,6 +47,13 @@ bool nrf_dfu_button_enter_check(void)
     return false;
 }
 
+uint32_t nrf_dfu_init_user(void)
+{
+	// Turn on power pin
+	nrf_gpio_cfg_output(PWR_ON);
+	nrf_gpio_pin_set(PWR_ON);
+}
+
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
     NRF_LOG_ERROR("Received a fault! id: 0x%08x, pc: 0x%08x, info: 0x%08x", id, pc, info);
