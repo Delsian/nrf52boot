@@ -52,6 +52,18 @@ uint32_t nrf_dfu_init_user(void)
 	// Turn on power pin
 	nrf_gpio_cfg_output(PWR_ON);
 	nrf_gpio_pin_set(PWR_ON);
+
+	// Init PCA chip
+
+}
+
+void nrf_dfu_advertising_led(uint8_t state)
+{
+
+}
+void nrf_dfu_connected_led(uint8_t state)
+{
+
 }
 
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
