@@ -35,6 +35,16 @@
 			<locationURI>PARENT-1-PROJECT_LOC/config</locationURI>
 		</link>
 		<link>
+			<name>pca9685.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/controller/src/pca9685.c</locationURI>
+		</link>
+		<link>
+			<name>twi_mngr.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/controller/src/twi_mngr.c</locationURI>
+		</link>
+		<link>
 			<name>SDK/Log</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -213,6 +223,11 @@
 			<name>SDK/nrf_drv_common.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/drivers_nrf/common/nrf_drv_common.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/nrf_drv_twi.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK/components/drivers_nrf/twi_master/nrf_drv_twi.c</locationURI>
 		</link>
 		<link>
 			<name>SDK/nrf_fprintf.c</name>

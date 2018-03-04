@@ -143,6 +143,8 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\atomic_fifo&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\sha256&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\external\fprintf&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}/../controller/src/devices&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\drivers_nrf\twi_master&quot;"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input.971571318" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input"/>
 							</tool>
@@ -203,6 +205,8 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}\external\fprintf&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\external\segger_rtt&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}/../config&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}/../controller/src/devices&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\drivers_nrf\twi_master&quot;"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.1368469132" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input"/>
 							</tool>
@@ -497,6 +501,8 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\atomic_fifo&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\components\libraries\sha256&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\external\fprintf&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}/../controller/src/devices&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\drivers_nrf\twi_master&quot;"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input.1028120124" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input"/>
 							</tool>
@@ -557,6 +563,8 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}\external\fprintf&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}\external\segger_rtt&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}/../config&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}/../controller/src/devices&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}\components\drivers_nrf\twi_master&quot;"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.516514729" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input"/>
 							</tool>
@@ -713,12 +721,6 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="nrf52boot.null.2111470623" name="nrf52boot"/>
 	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582;ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582.1152275185;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.551315968;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.1368469132">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Default">
@@ -726,4 +728,13 @@
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582;ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582.1152275185;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.551315968;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.1368469132">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582.812695337;ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582.812695337.;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1527644960;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.516514729">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+	</storageModule>
 </cproject>
