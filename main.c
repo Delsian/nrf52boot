@@ -71,8 +71,16 @@ bool nrf_dfu_button_enter_check(void)
 	tColors[0] = COLOR_ORANGE;
 	tColors[1] = COLOR_TURQUOISE;
 	while (usDfuDelay--) {
-		if (nrf_gpio_pin_read(BUTTON1) == 1)
+		if (nrf_gpio_pin_read(BUTTON1) == 1) {
+/* Enable this in release
+			if (usDfuDelay > BUTTON_DELAY_DFU-4) {
+				// Ignore too short button press for power on
+				nrf_gpio_pin_clear(PWR_ON); // switch off
+				while(1);
+			}
+*/
 			return false;
+		}
 		nrf_delay_ms(BLINK_TICK_TIMEOUT);
 		LedTickHandler();
 	}
