@@ -3,7 +3,6 @@
  */
 
 
-
 #include <stdint.h>
 #include "boards.h"
 #include "nrf_mbr.h"
@@ -99,7 +98,7 @@ uint32_t nrf_dfu_init_user(void)
 	// Init timer
 	//app_timer_create(&tLedTimer, APP_TIMER_MODE_REPEATED, LedTickHandler);
 	//app_timer_start(tLedTimer, BLINK_TICK_TIMEOUT, NULL);
-
+	return 0;
 }
 
 void nrf_dfu_advertising_led(uint8_t state)
@@ -124,5 +123,12 @@ void app_error_handler_bare(uint32_t error_code)
 {
     (void)error_code;
     NRF_LOG_ERROR("Received an error: 0x%08x!", error_code);
+    NVIC_SystemReset();
+}
+
+void app_error_handler(uint32_t error_code, uint32_t line, const uint8_t* file)
+{
+    (void)error_code;
+    NRF_LOG_ERROR("Received an error: 0x%08x, line %d file %s!", error_code, line, file);
     NVIC_SystemReset();
 }
