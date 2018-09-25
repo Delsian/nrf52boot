@@ -6,6 +6,7 @@
 *.ko
 *.obj
 *.elf
+*.lst
 
 # Linker output
 *.ilk
@@ -55,3 +56,4 @@ dkms.conf
 /Relese/
 /Debug/
 /Release/
+/out/
