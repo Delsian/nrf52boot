@@ -5,7 +5,7 @@ GROUP(-lgcc -lc -lnosys)
 
 MEMORY
 {
-  FLASH (rx) : ORIGIN = 0x6d000, LENGTH = 0x11000
+  FLASH (rx) : ORIGIN = 0x60000, LENGTH = 0x1E000
   RAM (rwx) :  ORIGIN = 0x20003000, LENGTH = 0xd000
   
   uicr_bootloader_start_address (r) : ORIGIN = 0x10001014, LENGTH = 0x4
@@ -74,7 +74,7 @@ SECTIONS
     KEEP(*(SORT(.dfu_trans*)))
     PROVIDE(__stop_dfu_trans = .);
   } > FLASH
-    .svc_data :
+  .svc_data :
   {
     PROVIDE(__start_svc_data = .);
     KEEP(*(.svc_data))
@@ -85,6 +85,30 @@ SECTIONS
     PROVIDE(__start_log_const_data = .);
     KEEP(*(SORT(.log_const_data*)))
     PROVIDE(__stop_log_const_data = .);
+  } > FLASH
+  .nrf_queue :
+  {
+    PROVIDE(__start_nrf_queue = .);
+    KEEP(*(.nrf_queue))
+    PROVIDE(__stop_nrf_queue = .);
+  } > FLASH
+  .nrf_balloc :
+  {
+    PROVIDE(__start_nrf_balloc = .);
+    KEEP(*(.nrf_balloc))
+    PROVIDE(__stop_nrf_balloc = .);
+  } > FLASH
+  .crypto_data :
+  {
+    PROVIDE(__start_crypto_data = .);
+    KEEP(*(SORT(.crypto_data*)))
+    PROVIDE(__stop_crypto_data = .);
+  } > FLASH
+  .log_backends :
+  {
+    PROVIDE(__start_log_backends = .);
+    KEEP(*(SORT(.log_backends*)))
+    PROVIDE(__stop_log_backends = .);
   } > FLASH
   .sdh_ble_observers :
   {
@@ -120,4 +144,4 @@ SECTIONS
 
 } INSERT AFTER .text
 
-INCLUDE "nrf5x_common.ld"
+INCLUDE "nrf_common.ld"

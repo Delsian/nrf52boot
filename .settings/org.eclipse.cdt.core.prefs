@@ -5,7 +5,7 @@ environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582
 environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582.812695337/append=true
 environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582.812695337/appendContributed=true
 environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582/SDK/delimiter=;
-environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582/SDK/operation=append
-environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582/SDK/value=${ProjDirPath}\\..\\SDK
+environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582/SDK/operation=replace
+environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582/SDK/value=${ProjDirPath}\\..\\SDK15.2
 environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582/append=true
 environment/project/ilg.gnuarmeclipse.managedbuild.cross.toolchain.base.48332582/appendContributed=true
