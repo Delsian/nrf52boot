@@ -153,7 +153,8 @@ SDK_SRCS += \
   $(SDK_DIR)/components/libraries/crypto/backend/oberon/oberon_backend_hmac.c \
   $(SDK_DIR)/components/libraries/twi_mngr/nrf_twi_mngr.c \
   $(SDK_DIR)/modules/nrfx/drivers/src/nrfx_twi.c \
-  $(SDK_DIR)/integration/nrfx/legacy/nrf_drv_twi.c
+  $(SDK_DIR)/integration/nrfx/legacy/nrf_drv_twi.c \
+  $(SDK_DIR)/libraries/util/app_error_handler_gcc.c
 
 LOG_SRCS += \
 $(SDK_DIR)/external/segger_rtt/SEGGER_RTT.c \
@@ -230,6 +231,7 @@ SDK_INCS = \
   $(SDK_DIR)/external/segger_rtt \
   $(SDK_DIR)/components/libraries/queue \
   $(SDK_DIR)/components/libraries/ringbuf \
+  $(SDK_DIR)/components/libraries/mutex \
 
 INCDIRS =  $(CONFIG_DIR) $(FW_SRC)/devices $(FW_SRC) $(SDK_INCS) $(SDK_DIR)/external/nano-pb
 

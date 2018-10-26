@@ -84,23 +84,9 @@ static void on_error(void)
     NVIC_SystemReset();
 }
 
-void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
-{
-    NRF_LOG_ERROR("%s:%d", p_file_name, line_num);
-    on_error();
-}
-
-
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
     NRF_LOG_ERROR("Received a fault! id: 0x%08x, pc: 0x%08x, info: 0x%08x", id, pc, info);
-    on_error();
-}
-
-
-void app_error_handler_bare(uint32_t error_code)
-{
-    NRF_LOG_ERROR("Received an error: 0x%08x!", error_code);
     on_error();
 }
 
@@ -193,10 +179,10 @@ int main(void)
     uint32_t ret_val;
 
     // Protect MBR and bootloader code from being overwritten.
-    //ret_val = nrf_bootloader_flash_protect(0, MBR_SIZE, false);
-    //APP_ERROR_CHECK(ret_val);
-    //ret_val = nrf_bootloader_flash_protect(BOOTLOADER_START_ADDR, BOOTLOADER_SIZE, false);
-    //APP_ERROR_CHECK(ret_val);
+    ret_val = nrf_bootloader_flash_protect(0, MBR_SIZE, false);
+    APP_ERROR_CHECK(ret_val);
+    ret_val = nrf_bootloader_flash_protect(BOOTLOADER_START_ADDR, BOOTLOADER_SIZE, false);
+    APP_ERROR_CHECK(ret_val);
 
     (void) NRF_LOG_INIT(nrf_bootloader_dfu_timer_counter_get);
     NRF_LOG_DEFAULT_BACKENDS_INIT();

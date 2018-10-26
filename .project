@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>nrf52boot</name>
+	<name>bootloader</name>
 	<comment></comment>
 	<projects>
-		<project>SDK15.2</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -21,30 +20,70 @@
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
 	<linkedResources>
 		<link>
+			<name>SDK</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>config</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/config</locationURI>
+			<locationURI>PARENT-1-PARENT_LOC/config</locationURI>
+		</link>
+		<link>
+			<name>nrf_drv_twi.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PARENT_LOC/SDK15.2/integration/nrfx/legacy/nrf_drv_twi.c</locationURI>
 		</link>
 		<link>
 			<name>pca9685.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/controller/src/pca9685.c</locationURI>
+			<locationURI>PARENT-1-PARENT_LOC/controller/src/pca9685.c</locationURI>
 		</link>
 		<link>
-			<name>twi_mngr.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/controller/src/twi_mngr.c</locationURI>
+			<name>SDK/ble</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK15.2/components/ble</locationURI>
+		</link>
+		<link>
+			<name>SDK/common</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK15.2/components/softdevice/common</locationURI>
+		</link>
+		<link>
+			<name>SDK/fprintf</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK15.2/external/fprintf</locationURI>
+		</link>
+		<link>
+			<name>SDK/libraries</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK15.2/components/libraries</locationURI>
+		</link>
+		<link>
+			<name>SDK/micro-ecc</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK15.2/external/micro-ecc</locationURI>
+		</link>
+		<link>
+			<name>SDK/modules</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK15.2/modules</locationURI>
+		</link>
+		<link>
+			<name>SDK/nano-pb</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK15.2/external/nano-pb</locationURI>
+		</link>
+		<link>
+			<name>SDK/segger_rtt</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SDK15.2/external/segger_rtt</locationURI>
 		</link>
 	</linkedResources>
-	<variableList>
-		<variable>
-			<name>SDK</name>
-			<value>$%7BPARENT-1-PROJECT_LOC%7D/SDK15.2</value>
-		</variable>
-	</variableList>
 </projectDescription>
