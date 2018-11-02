@@ -92,12 +92,10 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 
 uint32_t nrf_dfu_init_user(void)
 {
-	// Turn on power pin
-	nrf_gpio_cfg_output(PWR_ON);
-	nrf_gpio_pin_set(PWR_ON);
 
 	// Init PCA chip
 	PcaInit();
+	PcaLedColor(COLOR_BLACK);
 
 	// Init timer
 	//app_timer_create(&tLedTimer, APP_TIMER_MODE_REPEATED, LedTickHandler);
@@ -113,6 +111,8 @@ static void dfu_observer(nrf_dfu_evt_type_t evt_type)
     switch (evt_type)
     {
         case NRF_DFU_EVT_DFU_FAILED:
+        	NRF_LOG_INFO("EVT_DFU_FAILED");
+        	break;
         case NRF_DFU_EVT_DFU_ABORTED:
 /*            err_code = led_softblink_stop();
             APP_ERROR_CHECK(err_code);
@@ -123,17 +123,16 @@ static void dfu_observer(nrf_dfu_evt_type_t evt_type)
             err_code = led_softblink_start(BSP_LED_1_MASK);
             APP_ERROR_CHECK(err_code);
 */
+        	NRF_LOG_INFO("EVT_DFU_ABORTED");
             break;
         case NRF_DFU_EVT_DFU_INITIALIZED:
         {
-/*            bsp_board_init(BSP_INIT_LEDS);
-
-            if (!nrf_clock_lf_is_running())
+            /*
+        	if (!nrf_clock_lf_is_running())
             {
                 nrf_clock_task_trigger(NRF_CLOCK_TASK_LFCLKSTART);
             }
-            err_code = app_timer_init();
-            APP_ERROR_CHECK(err_code);
+            app_timer_init();
 
             led_sb_init_params_t led_sb_init_param = LED_SB_INIT_DEFAULT_PARAMS(BSP_LED_1_MASK);
 
@@ -148,6 +147,7 @@ static void dfu_observer(nrf_dfu_evt_type_t evt_type)
 
             err_code = led_softblink_start(BSP_LED_1_MASK);
             APP_ERROR_CHECK(err_code);*/
+        	NRF_LOG_INFO("EVT_DFU_INITIALIZED");
             break;
         }
         case NRF_DFU_EVT_TRANSPORT_ACTIVATED:
@@ -155,6 +155,7 @@ static void dfu_observer(nrf_dfu_evt_type_t evt_type)
  /*           uint32_t ticks = APP_TIMER_TICKS(DFU_LED_CONFIG_TRANSPORT_ACTIVE_BREATH_MS);
             led_softblink_off_time_set(ticks);
             led_softblink_on_time_set(ticks);*/
+        	NRF_LOG_INFO("EVT_DFU_ACTIVATED");
             break;
         }
         case NRF_DFU_EVT_TRANSPORT_DEACTIVATED:
@@ -165,7 +166,7 @@ static void dfu_observer(nrf_dfu_evt_type_t evt_type)
 
             err_code = app_timer_start(m_dfu_progress_led_timer, ticks, m_dfu_progress_led_timer);
             APP_ERROR_CHECK(err_code);*/
-
+        	NRF_LOG_INFO("EVT_DFU_DEACTIVATED");
             break;
         }
         default:
@@ -178,6 +179,10 @@ int main(void)
 {
     uint32_t ret_val;
 
+	// Turn on power pin
+	nrf_gpio_cfg_output(PWR_ON);
+	nrf_gpio_pin_set(PWR_ON);
+
     // Protect MBR and bootloader code from being overwritten.
     ret_val = nrf_bootloader_flash_protect(0, MBR_SIZE, false);
     APP_ERROR_CHECK(ret_val);
@@ -186,8 +191,6 @@ int main(void)
 
     (void) NRF_LOG_INIT(nrf_bootloader_dfu_timer_counter_get);
     NRF_LOG_DEFAULT_BACKENDS_INIT();
-
-    NRF_LOG_INFO("Inside main");
 
     ret_val = nrf_bootloader_init(dfu_observer);
     APP_ERROR_CHECK(ret_val);

@@ -153,6 +153,7 @@ SDK_SRCS += \
   $(SDK_DIR)/components/libraries/crypto/backend/oberon/oberon_backend_hmac.c \
   $(SDK_DIR)/components/libraries/twi_mngr/nrf_twi_mngr.c \
   $(SDK_DIR)/modules/nrfx/drivers/src/nrfx_twi.c \
+  $(SDK_DIR)/modules/nrfx/drivers/src/nrfx_twim.c \
   $(SDK_DIR)/integration/nrfx/legacy/nrf_drv_twi.c \
   $(SDK_DIR)/libraries/util/app_error_handler_gcc.c
 
@@ -317,10 +318,13 @@ $(BUILD_DIR)/$(PROJECT).elf : $(OBJECTS) Makefile
 
 all: $(BUILD_DIR)/$(PROJECT).elf $(PROJECT).hex
 
-.PHONY: flash
+.PHONY: clean flash reset
 
 clean:
 	rm -fR .dep $(BUILD_DIR)
+
+reset:
+	$(NRFJPROG) -f nrf52 --reset
 
 flash: $(PROJECT).hex
 	$(NRFJPROG) -f nrf52 --program $(PROJECT).hex --sectoranduicrerase
