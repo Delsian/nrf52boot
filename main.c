@@ -15,12 +15,15 @@
 #include "nrf_bootloader_app_start.h"
 #include "nrf_bootloader_dfu_timers.h"
 #include "nrf_dfu.h"
+#include "nrf_bootloader_wdt.h"
 #include "nrf_delay.h"
+#include "nrf_clock.h"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 #include "app_error.h"
 #include "app_error_weak.h"
+#include "app_timer.h"
 #include "nrf_bootloader_info.h"
 #include "../controller/src/pca9685.h"
 #include "rdev_led.h" // Colors
@@ -29,12 +32,16 @@
 /**@brief Long button press to enter dfu
  */
 #define BUTTON_DELAY_SEC 5
-#define BLINK_TICK_TIMEOUT 200
+#define BLINK_TICK_TIMEOUT 6000
 #define BUTTON_DELAY_DFU (BUTTON_DELAY_SEC*1000)/BLINK_TICK_TIMEOUT
 
 void PcaInit(void);
 void PcaLedColor(LedColor color);
-static LedColor tColors[2];
+static LedColor tColors[2] = {
+		COLOR_BLACK,
+		COLOR_GREEN
+};
+APP_TIMER_DEF(tLedTimer);
 
 static void LedTickHandler()
 {
@@ -95,11 +102,16 @@ uint32_t nrf_dfu_init_user(void)
 
 	// Init PCA chip
 	PcaInit();
-	PcaLedColor(COLOR_BLACK);
+	PcaLedColor(COLOR_BLUE);
 
 	// Init timer
-	//app_timer_create(&tLedTimer, APP_TIMER_MODE_REPEATED, LedTickHandler);
-	//app_timer_start(tLedTimer, BLINK_TICK_TIMEOUT, NULL);
+	if (!nrf_clock_lf_is_running())
+    {
+        nrf_clock_task_trigger(NRF_CLOCK_TASK_LFCLKSTART);
+    }
+	app_timer_init();
+	app_timer_create(&tLedTimer, APP_TIMER_MODE_REPEATED, LedTickHandler);
+	app_timer_start(tLedTimer, BLINK_TICK_TIMEOUT, NULL);
 	return 0;
 }
 
@@ -111,64 +123,28 @@ static void dfu_observer(nrf_dfu_evt_type_t evt_type)
     switch (evt_type)
     {
         case NRF_DFU_EVT_DFU_FAILED:
+            tColors[0] = COLOR_RED;
+            tColors[1] = COLOR_BLACK;
         	NRF_LOG_INFO("EVT_DFU_FAILED");
         	break;
         case NRF_DFU_EVT_DFU_ABORTED:
-/*            err_code = led_softblink_stop();
-            APP_ERROR_CHECK(err_code);
-
-            err_code = app_timer_stop(m_dfu_progress_led_timer);
-            APP_ERROR_CHECK(err_code);
-
-            err_code = led_softblink_start(BSP_LED_1_MASK);
-            APP_ERROR_CHECK(err_code);
-*/
+            tColors[0] = COLOR_RED;
+            tColors[1] = COLOR_BLUE;
         	NRF_LOG_INFO("EVT_DFU_ABORTED");
             break;
         case NRF_DFU_EVT_DFU_INITIALIZED:
-        {
-            /*
-        	if (!nrf_clock_lf_is_running())
-            {
-                nrf_clock_task_trigger(NRF_CLOCK_TASK_LFCLKSTART);
-            }
-            app_timer_init();
-
-            led_sb_init_params_t led_sb_init_param = LED_SB_INIT_DEFAULT_PARAMS(BSP_LED_1_MASK);
-
-            uint32_t ticks = APP_TIMER_TICKS(DFU_LED_CONFIG_TRANSPORT_INACTIVE_BREATH_MS);
-            led_sb_init_param.p_leds_port    = BSP_LED_1_PORT;
-            led_sb_init_param.on_time_ticks  = ticks;
-            led_sb_init_param.off_time_ticks = ticks;
-            led_sb_init_param.duty_cycle_max = 255;
-
-            err_code = led_softblink_init(&led_sb_init_param);
-            APP_ERROR_CHECK(err_code);
-
-            err_code = led_softblink_start(BSP_LED_1_MASK);
-            APP_ERROR_CHECK(err_code);*/
         	NRF_LOG_INFO("EVT_DFU_INITIALIZED");
             break;
-        }
         case NRF_DFU_EVT_TRANSPORT_ACTIVATED:
-        {
- /*           uint32_t ticks = APP_TIMER_TICKS(DFU_LED_CONFIG_TRANSPORT_ACTIVE_BREATH_MS);
-            led_softblink_off_time_set(ticks);
-            led_softblink_on_time_set(ticks);*/
+            tColors[0] = COLOR_BLUE;
+            tColors[1] = COLOR_BLUE;
         	NRF_LOG_INFO("EVT_DFU_ACTIVATED");
             break;
-        }
         case NRF_DFU_EVT_TRANSPORT_DEACTIVATED:
-        {
-/*            uint32_t ticks =  APP_TIMER_TICKS(DFU_LED_CONFIG_PROGRESS_BLINK_MS);
-            err_code = led_softblink_stop();
-            APP_ERROR_CHECK(err_code);
-
-            err_code = app_timer_start(m_dfu_progress_led_timer, ticks, m_dfu_progress_led_timer);
-            APP_ERROR_CHECK(err_code);*/
+            tColors[0] = COLOR_GREEN;
+            tColors[1] = COLOR_BLACK;
         	NRF_LOG_INFO("EVT_DFU_DEACTIVATED");
             break;
-        }
         default:
             break;
     }
@@ -195,4 +171,6 @@ int main(void)
     ret_val = nrf_bootloader_init(dfu_observer);
     APP_ERROR_CHECK(ret_val);
 }
+
+
 

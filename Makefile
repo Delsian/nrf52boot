@@ -21,7 +21,7 @@ HEX = $(CP) -O ihex
 BIN = $(CP) -O binary -S
 
 # Default variables.
-BUILD_TYPE ?= Debug
+BUILD_TYPE ?= Release
 
 # Configure RTT based on BUILD_TYPE variable.
 ifeq "$(BUILD_TYPE)" "Release"
@@ -105,6 +105,8 @@ SDK_SRCS += \
   $(SDK_DIR)/components/libraries/experimental_section_vars/nrf_section_iter.c \
   $(SDK_DIR)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_DIR)/components/libraries/sha256/sha256.c \
+  $(SDK_DIR)/components/libraries/timer/app_timer.c \
+  $(SDK_DIR)/components/libraries/util/app_error.c \
   $(SDK_DIR)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecc.c \
   $(SDK_DIR)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecdh.c \
   $(SDK_DIR)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecdsa.c \
@@ -217,6 +219,7 @@ SDK_INCS = \
   $(SDK_DIR)/external/fprintf \
   $(SDK_DIR)/components/libraries/crypto \
   $(SDK_DIR)/components/libraries/scheduler \
+  $(SDK_DIR)/components/libraries/timer \
   $(SDK_DIR)/modules/nrfx/hal \
   $(SDK_DIR)/components/toolchain/cmsis/include \
   $(SDK_DIR)/components/libraries/balloc \
