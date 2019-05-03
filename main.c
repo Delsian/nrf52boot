@@ -1,74 +1,70 @@
-/** @file
+/**
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
- * @defgroup bootloader_secure_ble main.c
- * @{
- * @ingroup dfu_bootloader_api
- * @brief Bootloader project main file for secure DFU.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ *
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ *
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ *
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ *
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
+/** @file
+ *
+ * @defgroup bootloader_open_usb_main main.c
+ * @{
+ * @ingroup bootloader_open_usb
+ * @brief Bootloader project main file for Open DFU over USB.
+ *
+ */
 
 #include <stdint.h>
 #include "boards.h"
 #include "nrf_mbr.h"
 #include "nrf_bootloader.h"
 #include "nrf_bootloader_app_start.h"
-#include "nrf_bootloader_dfu_timers.h"
 #include "nrf_dfu.h"
-#include "nrf_delay.h"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 #include "app_error.h"
 #include "app_error_weak.h"
 #include "nrf_bootloader_info.h"
-#include "../controller/src/pca9685.h"
-#include "rdev_led.h" // Colors
+#include "nrf_dfu_utils.h"
+#include "app_timer.h"
+#include "nrf_delay.h"
+#include "nrf_clock.h"
 
-
-/**@brief Long button press to enter dfu
- */
-#define BUTTON_DELAY_SEC 5
-#define BLINK_TICK_TIMEOUT 200
-#define BUTTON_DELAY_DFU (BUTTON_DELAY_SEC*1000)/BLINK_TICK_TIMEOUT
-
-void PcaInit(void);
-void PcaLedColor(LedColor color);
-static LedColor tColors[2];
-
-static void LedTickHandler()
-{
-    static LedColor c;
-
-    if (c == tColors[0])
-        c = tColors[1];
-    else
-        c = tColors[0];
-    PcaLedColor(c);
-}
-
-bool nrf_dfu_button_enter_check(void)
-{
-    nrf_gpio_cfg_input(BUTTON1, NRF_GPIO_PIN_PULLUP);
-    uint16_t usDfuDelay = BUTTON_DELAY_DFU;
-    tColors[0] = COLOR_ORANGE;
-    tColors[1] = COLOR_TURQUOISE;
-    while (usDfuDelay--) {
-        if (nrf_gpio_pin_read(BUTTON1) == 1) {
-/* Enable this in release
-            if (usDfuDelay > BUTTON_DELAY_DFU-4) {
-                // Ignore too short button press for power on
-                nrf_gpio_pin_clear(PWR_ON); // switch off
-                while(1);
-            }
-*/
-            return false;
-        }
-        nrf_delay_ms(BLINK_TICK_TIMEOUT);
-        LedTickHandler();
-    }
-    return true;
-}
+/* Timer used to blink LED on DFU progress. */
+APP_TIMER_DEF(m_dfu_progress_led_timer);
 
 static void on_error(void)
 {
@@ -90,19 +86,17 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
     on_error();
 }
 
-uint32_t nrf_dfu_init_user(void)
+
+static void dfu_progress_led_timeout_handler(void * p_context)
 {
-	// Turn on power pin
-	nrf_gpio_cfg_output(PWR_ON);
-	nrf_gpio_pin_set(PWR_ON);
+    app_timer_id_t timer = (app_timer_id_t)p_context;
 
-	// Init PCA chip
-	PcaInit();
+    uint32_t err_code = app_timer_start(timer,
+                                        APP_TIMER_TICKS(1000), //DFU_LED_CONFIG_PROGRESS_BLINK_MS),
+                                        p_context);
+    APP_ERROR_CHECK(err_code);
 
-	// Init timer
-	//app_timer_create(&tLedTimer, APP_TIMER_MODE_REPEATED, LedTickHandler);
-	//app_timer_start(tLedTimer, BLINK_TICK_TIMEOUT, NULL);
-	return 0;
+    //bsp_board_led_invert(BSP_BOARD_LED_1);
 }
 
 /**
@@ -110,23 +104,37 @@ uint32_t nrf_dfu_init_user(void)
  */
 static void dfu_observer(nrf_dfu_evt_type_t evt_type)
 {
+    static bool timer_created = false;
+    uint32_t err_code;
+
+    if (!timer_created)
+    {
+        err_code = app_timer_create(&m_dfu_progress_led_timer,
+                                    APP_TIMER_MODE_SINGLE_SHOT,
+                                    dfu_progress_led_timeout_handler);
+        APP_ERROR_CHECK(err_code);
+        timer_created = true;
+    }
+
     switch (evt_type)
     {
         case NRF_DFU_EVT_DFU_FAILED:
         case NRF_DFU_EVT_DFU_ABORTED:
-/*            err_code = led_softblink_stop();
-            APP_ERROR_CHECK(err_code);
+        	NRF_LOG_INFO("DFU abort");
+//            err_code = led_softblink_stop();
+//            APP_ERROR_CHECK(err_code);
 
             err_code = app_timer_stop(m_dfu_progress_led_timer);
             APP_ERROR_CHECK(err_code);
+//
+//            err_code = led_softblink_start(BSP_LED_1_MASK);
+//            APP_ERROR_CHECK(err_code);
 
-            err_code = led_softblink_start(BSP_LED_1_MASK);
-            APP_ERROR_CHECK(err_code);
-*/
             break;
         case NRF_DFU_EVT_DFU_INITIALIZED:
         {
-/*            bsp_board_init(BSP_INIT_LEDS);
+        	NRF_LOG_INFO("DFU in");
+            bsp_board_init(BSP_INIT_LEDS);
 
             if (!nrf_clock_lf_is_running())
             {
@@ -135,36 +143,37 @@ static void dfu_observer(nrf_dfu_evt_type_t evt_type)
             err_code = app_timer_init();
             APP_ERROR_CHECK(err_code);
 
-            led_sb_init_params_t led_sb_init_param = LED_SB_INIT_DEFAULT_PARAMS(BSP_LED_1_MASK);
+//            led_sb_init_params_t led_sb_init_param = LED_SB_INIT_DEFAULT_PARAMS(BSP_LED_1_MASK);
 
-            uint32_t ticks = APP_TIMER_TICKS(DFU_LED_CONFIG_TRANSPORT_INACTIVE_BREATH_MS);
-            led_sb_init_param.p_leds_port    = BSP_LED_1_PORT;
-            led_sb_init_param.on_time_ticks  = ticks;
-            led_sb_init_param.off_time_ticks = ticks;
-            led_sb_init_param.duty_cycle_max = 255;
-
-            err_code = led_softblink_init(&led_sb_init_param);
-            APP_ERROR_CHECK(err_code);
-
-            err_code = led_softblink_start(BSP_LED_1_MASK);
-            APP_ERROR_CHECK(err_code);*/
+            //uint32_t ticks = APP_TIMER_TICKS(DFU_LED_CONFIG_TRANSPORT_INACTIVE_BREATH_MS);
+//            led_sb_init_param.p_leds_port    = BSP_LED_1_PORT;
+//            led_sb_init_param.on_time_ticks  = ticks;
+//            led_sb_init_param.off_time_ticks = ticks;
+//            led_sb_init_param.duty_cycle_max = 255;
+//
+//            err_code = led_softblink_init(&led_sb_init_param);
+//            APP_ERROR_CHECK(err_code);
+//
+//            err_code = led_softblink_start(BSP_LED_1_MASK);
+//            APP_ERROR_CHECK(err_code);
             break;
         }
         case NRF_DFU_EVT_TRANSPORT_ACTIVATED:
         {
- /*           uint32_t ticks = APP_TIMER_TICKS(DFU_LED_CONFIG_TRANSPORT_ACTIVE_BREATH_MS);
-            led_softblink_off_time_set(ticks);
-            led_softblink_on_time_set(ticks);*/
+        	NRF_LOG_INFO("TRANSPORT_ACTIVATED");
+            //uint32_t ticks = APP_TIMER_TICKS(DFU_LED_CONFIG_TRANSPORT_ACTIVE_BREATH_MS);
+//            led_softblink_off_time_set(ticks);
+//            led_softblink_on_time_set(ticks);
             break;
         }
         case NRF_DFU_EVT_TRANSPORT_DEACTIVATED:
         {
-/*            uint32_t ticks =  APP_TIMER_TICKS(DFU_LED_CONFIG_PROGRESS_BLINK_MS);
-            err_code = led_softblink_stop();
-            APP_ERROR_CHECK(err_code);
+            //uint32_t ticks =  APP_TIMER_TICKS(DFU_LED_CONFIG_PROGRESS_BLINK_MS);
+//            err_code = led_softblink_stop();
+//            APP_ERROR_CHECK(err_code);
 
-            err_code = app_timer_start(m_dfu_progress_led_timer, ticks, m_dfu_progress_led_timer);
-            APP_ERROR_CHECK(err_code);*/
+//            err_code = app_timer_start(m_dfu_progress_led_timer, ticks, m_dfu_progress_led_timer);
+//            APP_ERROR_CHECK(err_code);
 
             break;
         }
@@ -172,11 +181,17 @@ static void dfu_observer(nrf_dfu_evt_type_t evt_type)
             break;
     }
 }
-
-/**@brief Function for application main entry. */
+/**@brief Function for application main entry.
+ */
 int main(void)
 {
     uint32_t ret_val;
+
+    (void) NRF_LOG_INIT(NULL);
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    NRF_LOG_INFO("Open USB bootloader started");
+    NRF_LOG_FLUSH();
 
     // Protect MBR and bootloader code from being overwritten.
     ret_val = nrf_bootloader_flash_protect(0, MBR_SIZE, false);
@@ -184,12 +199,24 @@ int main(void)
     ret_val = nrf_bootloader_flash_protect(BOOTLOADER_START_ADDR, BOOTLOADER_SIZE, false);
     APP_ERROR_CHECK(ret_val);
 
-    (void) NRF_LOG_INIT(nrf_bootloader_dfu_timer_counter_get);
-    NRF_LOG_DEFAULT_BACKENDS_INIT();
-
-    NRF_LOG_INFO("Inside main");
-
     ret_val = nrf_bootloader_init(dfu_observer);
     APP_ERROR_CHECK(ret_val);
+
+    // Either there was no DFU functionality enabled in this project or the DFU module detected
+    // no ongoing DFU operation and found a valid main application.
+    // Boot the main application.
+    nrf_bootloader_app_start();
+
+    // Should never be reached.
+    NRF_LOG_INFO("After main");
+    NRF_LOG_FLUSH();
 }
 
+void bsp_board_init(uint32_t flags)
+{
+	(void)flags;
+}
+
+/**
+ * @}
+ */

@@ -57,3 +57,8 @@ dkms.conf
 /Debug/
 /Release/
 /out/
+/CMakeCache.txt
+/CMakeFiles
+*.bin
+/cmake_install.cmake
+/Makefile
