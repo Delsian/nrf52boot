@@ -107,6 +107,8 @@ static void dfu_observer(nrf_dfu_evt_type_t evt_type)
     static bool timer_created = false;
     uint32_t err_code;
 
+    NRF_LOG_DEBUG("Observer: %d", evt_type);
+
     if (!timer_created)
     {
         err_code = app_timer_create(&m_dfu_progress_led_timer,
@@ -190,7 +192,7 @@ int main(void)
     (void) NRF_LOG_INIT(NULL);
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("Open USB bootloader started");
+    NRF_LOG_INFO("Bootloader started");
     NRF_LOG_FLUSH();
 
     // Protect MBR and bootloader code from being overwritten.
@@ -201,15 +203,6 @@ int main(void)
 
     ret_val = nrf_bootloader_init(dfu_observer);
     APP_ERROR_CHECK(ret_val);
-
-    // Either there was no DFU functionality enabled in this project or the DFU module detected
-    // no ongoing DFU operation and found a valid main application.
-    // Boot the main application.
-    nrf_bootloader_app_start();
-
-    // Should never be reached.
-    NRF_LOG_INFO("After main");
-    NRF_LOG_FLUSH();
 }
 
 void bsp_board_init(uint32_t flags)
