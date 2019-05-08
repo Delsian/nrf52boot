@@ -64,7 +64,7 @@
 #include "nrf_clock.h"
 
 /* Timer used to blink LED on DFU progress. */
-APP_TIMER_DEF(m_dfu_progress_led_timer);
+//APP_TIMER_DEF(m_dfu_progress_led_timer);
 
 static void on_error(void)
 {
@@ -74,6 +74,7 @@ static void on_error(void)
     // To allow the buffer to be flushed by the host.
     nrf_delay_ms(100);
 #endif
+    while(1); // ToDo !!!!
 #ifdef NRF_DFU_DEBUG_VERSION
     NRF_BREAKPOINT_COND;
 #endif
@@ -86,101 +87,27 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
     on_error();
 }
 
-
-static void dfu_progress_led_timeout_handler(void * p_context)
-{
-    app_timer_id_t timer = (app_timer_id_t)p_context;
-
-    uint32_t err_code = app_timer_start(timer,
-                                        APP_TIMER_TICKS(1000), //DFU_LED_CONFIG_PROGRESS_BLINK_MS),
-                                        p_context);
-    APP_ERROR_CHECK(err_code);
-
-    //bsp_board_led_invert(BSP_BOARD_LED_1);
-}
-
 /**
  * @brief Function notifies certain events in DFU process.
  */
-static void dfu_observer(nrf_dfu_evt_type_t evt_type)
+static void user_dfu_observer(nrf_dfu_evt_type_t evt_type)
 {
-    static bool timer_created = false;
-    uint32_t err_code;
-
-    NRF_LOG_DEBUG("Observer: %d", evt_type);
-
-    if (!timer_created)
-    {
-        err_code = app_timer_create(&m_dfu_progress_led_timer,
-                                    APP_TIMER_MODE_SINGLE_SHOT,
-                                    dfu_progress_led_timeout_handler);
-        APP_ERROR_CHECK(err_code);
-        timer_created = true;
-    }
-
     switch (evt_type)
     {
-        case NRF_DFU_EVT_DFU_FAILED:
-        case NRF_DFU_EVT_DFU_ABORTED:
-        	NRF_LOG_INFO("DFU abort");
-//            err_code = led_softblink_stop();
-//            APP_ERROR_CHECK(err_code);
-
-            err_code = app_timer_stop(m_dfu_progress_led_timer);
-            APP_ERROR_CHECK(err_code);
-//
-//            err_code = led_softblink_start(BSP_LED_1_MASK);
-//            APP_ERROR_CHECK(err_code);
-
-            break;
-        case NRF_DFU_EVT_DFU_INITIALIZED:
-        {
-        	NRF_LOG_INFO("DFU in");
-            bsp_board_init(BSP_INIT_LEDS);
-
-            if (!nrf_clock_lf_is_running())
-            {
-                nrf_clock_task_trigger(NRF_CLOCK_TASK_LFCLKSTART);
-            }
-            err_code = app_timer_init();
-            APP_ERROR_CHECK(err_code);
-
-//            led_sb_init_params_t led_sb_init_param = LED_SB_INIT_DEFAULT_PARAMS(BSP_LED_1_MASK);
-
-            //uint32_t ticks = APP_TIMER_TICKS(DFU_LED_CONFIG_TRANSPORT_INACTIVE_BREATH_MS);
-//            led_sb_init_param.p_leds_port    = BSP_LED_1_PORT;
-//            led_sb_init_param.on_time_ticks  = ticks;
-//            led_sb_init_param.off_time_ticks = ticks;
-//            led_sb_init_param.duty_cycle_max = 255;
-//
-//            err_code = led_softblink_init(&led_sb_init_param);
-//            APP_ERROR_CHECK(err_code);
-//
-//            err_code = led_softblink_start(BSP_LED_1_MASK);
-//            APP_ERROR_CHECK(err_code);
-            break;
-        }
-        case NRF_DFU_EVT_TRANSPORT_ACTIVATED:
-        {
-        	NRF_LOG_INFO("TRANSPORT_ACTIVATED");
-            //uint32_t ticks = APP_TIMER_TICKS(DFU_LED_CONFIG_TRANSPORT_ACTIVE_BREATH_MS);
-//            led_softblink_off_time_set(ticks);
-//            led_softblink_on_time_set(ticks);
-            break;
-        }
-        case NRF_DFU_EVT_TRANSPORT_DEACTIVATED:
-        {
-            //uint32_t ticks =  APP_TIMER_TICKS(DFU_LED_CONFIG_PROGRESS_BLINK_MS);
-//            err_code = led_softblink_stop();
-//            APP_ERROR_CHECK(err_code);
-
-//            err_code = app_timer_start(m_dfu_progress_led_timer, ticks, m_dfu_progress_led_timer);
-//            APP_ERROR_CHECK(err_code);
-
-            break;
-        }
-        default:
-            break;
+    case NRF_DFU_EVT_DFU_FAILED:
+    case NRF_DFU_EVT_DFU_ABORTED:
+    	NRF_LOG_DEBUG("dfu fail");
+    	break;
+    case NRF_DFU_EVT_DFU_INITIALIZED:
+    	NRF_LOG_DEBUG("dfu init");
+        break;
+    case NRF_DFU_EVT_TRANSPORT_ACTIVATED:
+    	NRF_LOG_DEBUG("dfu active");
+        break;
+    case NRF_DFU_EVT_DFU_STARTED:
+        break;
+    default:
+        break;
     }
 }
 /**@brief Function for application main entry.
@@ -201,7 +128,7 @@ int main(void)
     ret_val = nrf_bootloader_flash_protect(BOOTLOADER_START_ADDR, BOOTLOADER_SIZE, false);
     APP_ERROR_CHECK(ret_val);
 
-    ret_val = nrf_bootloader_init(dfu_observer);
+    ret_val = nrf_bootloader_init(user_dfu_observer);
     APP_ERROR_CHECK(ret_val);
 }
 

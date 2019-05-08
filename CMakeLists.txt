@@ -15,9 +15,6 @@ ADD_DEFINITIONS(
 	-DNRF_SD_BLE_API_VERSION=6
 	-DS132
 	-DSOFTDEVICE_PRESENT
-	-DMBR_PRESENT
-	-DAPP_TIMER_V2
-	-DAPP_TIMER_V2_RTC1_ENABLED
 	-DSWI_DISABLE0
 	-DNRF_DFU_SETTINGS_VERSION=2
 	-DNRF_DFU_SVCI_ENABLED
@@ -27,11 +24,7 @@ ADD_DEFINITIONS(
 	-DuECC_SQUARE_FUNC=0
 	-DuECC_SUPPORT_COMPRESSED_POINT=0
 	-DuECC_VLI_NATIVE_LITTLE_ENDIAN=1
-	-DNRF_CRYPTO_MAX_INSTANCE_COUNT=1
-	-DMBEDTLS_CONFIG_FILE=\"nrf_crypto_mbedtls_config.h\"
-	-DNRF_CRYPTO_HASH_ENABLED=1
-	-D__HEAP_SIZE=8192
-	-D__STACK_SIZE=8192
+	-D__HEAP_SIZE=0
 	)
 
 INCLUDE("../config/SDK.cmake")
@@ -65,45 +58,40 @@ ADD_EXECUTABLE(${CMAKE_PROJECT_NAME}.elf
 	${NRF52_SYSTEM}
 	${SDK_EXT_FPRINTF_SOURCES}
 	${SDK_LOG_SOURCES}
-	${SDK_CRYPTO_SOURCES}
 	)
 
 ADD_LIBRARY(oberon STATIC IMPORTED)
 set_target_properties( oberon PROPERTIES IMPORTED_LOCATION ${SDK_DIR}/external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_2.0.7.a )
+ADD_LIBRARY(micro_ecc STATIC IMPORTED)
+set_target_properties( micro_ecc PROPERTIES IMPORTED_LOCATION ${SDK_DIR}/external/micro-ecc/nrf52hf_armgcc/armgcc/micro_ecc_lib_nrf52.a )
 TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}.elf 
 	m
 	c
 	nosys
 	oberon
+	micro_ecc
 	)
 
+SET(MBRHEX ${SDK_SD_DIR}../mbr/nrf52832/hex/mbr_nrf52_2.4.1_mbr.hex)
 # Convert elf to hex & bin
 ADD_CUSTOM_COMMAND(TARGET ${CMAKE_PROJECT_NAME}.elf 
-	POST_BUILD COMMAND ${CMAKE_OBJCOPY} ARGS -Oihex ${CMAKE_PROJECT_NAME}.elf ${CMAKE_PROJECT_NAME}.hex
+	POST_BUILD COMMAND ${CMAKE_OBJCOPY} ARGS -R .rtt -Oihex ${CMAKE_PROJECT_NAME}.elf ${CMAKE_PROJECT_NAME}.out
+	POST_BUILD COMMAND ${MERGEHEX} -m ${CMAKE_PROJECT_NAME}.out ${MBRHEX} -o ${CMAKE_PROJECT_NAME}.hex
 	)
 ADD_CUSTOM_COMMAND(TARGET ${CMAKE_PROJECT_NAME}.elf
-	POST_BUILD COMMAND ${CMAKE_OBJCOPY} ARGS -Obinary ${CMAKE_PROJECT_NAME}.elf ${CMAKE_PROJECT_NAME}.bin
+	POST_BUILD COMMAND ${CMAKE_OBJCOPY} ARGS -R .rtt -Obinary ${CMAKE_PROJECT_NAME}.elf ${CMAKE_PROJECT_NAME}.bin
 	)
 
-# adds target for erasing and flashing the board
+# Derict FW flashing
 ADD_CUSTOM_TARGET(flashsd
 	COMMAND ${NRFJPROG} -f ${TARGET_PLATFORM} --eraseall
     COMMAND ${NRFJPROG} -f ${TARGET_PLATFORM} --program ${SOFTDEVICE_PATH}
-    COMMAND ${NRFJPROG} -f ${TARGET_PLATFORM} --program ${SDK_SD_DIR}../mbr/nrf52832/hex/mbr_nrf52_2.4.1_mbr.hex --sectorerase
-    COMMENT "Flashing Softdevice"
+    COMMENT "Flashing softdevice"
     )
 
-SET(S_PARAM --application-version 1 --bootloader-version 1 --bl-settings-version 1)
-ADD_CUSTOM_TARGET(settings
-	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    COMMAND ${NRFUTIL} settings generate --family ${TARGET_PLATFORM} --application ${CMAKE_PROJECT_NAME}.hex ${S_PARAM} ${SETTINGS_HEX}  	 
-    COMMENT "Generate bootloader settings"
-    )
-
-# Derict FW flashing
 ADD_CUSTOM_TARGET(flash
 	DEPENDS ${CMAKE_PROJECT_NAME}.elf
-    COMMAND ${NRFJPROG} -f ${TARGET_PLATFORM} --program ${CMAKE_PROJECT_NAME}.hex --sectoranduicrerase
+    COMMAND ${NRFJPROG} -f ${TARGET_PLATFORM} --program ${CMAKE_PROJECT_NAME}.hex --sectorerase
     COMMAND ${NRFJPROG} -f ${TARGET_PLATFORM} -r
     COMMENT "Flashing program"
     )
